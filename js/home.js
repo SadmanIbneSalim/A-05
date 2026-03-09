@@ -2,13 +2,16 @@
 
 const cardContainer = document.getElementById("card-container");
 const issuesCount = document.getElementById("Issues-count");
+
 const loadingSpinner = document.getElementById("loading-spinner");
 // buttons
 const allBtn = document.getElementById("all-btn");
 const openBtn = document.getElementById("open-btn");
 const closedBtn = document.getElementById("closed-btn");
 
-const cardDetailsModel=document.getElementById('my_modal_1')
+const cardDetailsModel=document.getElementById('my_modal_1');
+
+const searchInput=document.getElementById('search-box')
 
 function showLoading() {
   loadingSpinner.classList.remove("hidden");
@@ -30,7 +33,8 @@ async function loadCards() {
 }
 
 function displayCards(cards) {
-    
+
+    cardContainer.innerHTML = "";
   cards.forEach((element) => {
     const card = document.createElement("div");
     card.className = "card bg-base-100 shadow-sm ";
@@ -65,6 +69,7 @@ id
              <p class="text-[12px] text-[#64748B]">#<span>${element.id}</span> By <span>${element.author}</span></p>
              <p class="text-[12px] text-[#64748B]">${element.updatedAt}</p>
             </div>`;
+            issuesCount.innerText = cards.length;
     cardContainer.appendChild(card);
     console.log();
     
@@ -119,5 +124,29 @@ async function openModal(cardId){
     cardDetailsModel.showModal()
 }
 
+async function searchIssues(searchText){
+
+  showLoading();
+  const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}`);
+  const data = await res.json();
+
+  hideLoading();
+
+  displayCards(data.data);
+
+}
+
+searchInput.addEventListener("keyup", (i)=>{
+
+  const text = i.target.value;
+
+  if(text.length === 0){
+     loadCards();
+  }
+  else{
+    searchIssues(text);
+  }
+
+});
 
 loadCards();
