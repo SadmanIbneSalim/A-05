@@ -32,20 +32,26 @@ async function loadCards() {
 }
 
 allBtn.addEventListener("click", () => {
+  showLoading();
   displayCards(allIssues);
+  hideLoading();
 
   setActiveButton(allBtn);
 });
 
 openBtn.addEventListener("click", () => {
+  showLoading();
   const openIssues = allIssues.filter((issue) => issue.status === "open");
   displayCards(openIssues);
+  hideLoading();
   setActiveButton(openBtn);
 });
 
 closedBtn.addEventListener("click", () => {
+  showLoading();
   const closedIssues = allIssues.filter((issue) => issue.status === "closed");
   displayCards(closedIssues);
+  hideLoading();
   setActiveButton(closedBtn);
 });
 
@@ -65,6 +71,13 @@ function displayCards(cards) {
       element.status === "open"
         ? "./assets/Open-Status.png"
         : "./assets/Closed- Status .png";
+        const labelsHTML = element.labels
+  .map(label => `
+    <div class="badge badge-soft badge-warning border-yellow-300 rounded-full">
+      <i class="fa-solid fa-bug"></i>${label}
+    </div>
+  `)
+  .join("");
     const card = document.createElement("div");
     if (element.status === "open") {
       card.className = "card bg-base-100 shadow-sm border-t-4 border-green-500";
@@ -85,12 +98,8 @@ function displayCards(cards) {
                 ${element.description}
               </p>
               <div class="flex gap-2 lg:flex-col py-2 space-y-1">
-                <div class="badge badge-soft badge-error border-red-300 rounded-full"><i class="fa-solid fa-bug"></i>${
-                  element.labels[0]
-                }</div>
-                    <div class="badge badge-soft badge-warning border-yellow-300 rounded-full"><i class="fa-regular fa-life-ring"></i>${
-                      element.labels[1]
-                    }</div>
+${labelsHTML}
+</div>
               </div>
               
 
