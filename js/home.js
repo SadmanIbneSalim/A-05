@@ -1,5 +1,3 @@
-
-
 const cardContainer = document.getElementById("card-container");
 const issuesCount = document.getElementById("Issues-count");
 
@@ -9,9 +7,10 @@ const allBtn = document.getElementById("all-btn");
 const openBtn = document.getElementById("open-btn");
 const closedBtn = document.getElementById("closed-btn");
 
-const cardDetailsModel=document.getElementById('my_modal_1');
+const cardDetailsModel = document.getElementById("my_modal_1");
 
-const searchInput=document.getElementById('search-box')
+const searchInput = document.getElementById("search-box");
+let allIssues = [];
 
 function showLoading() {
   loadingSpinner.classList.remove("hidden");
@@ -28,30 +27,52 @@ async function loadCards() {
   );
   const data = await res.json();
   hideLoading();
-  displayCards(data.data);
-  
+  allIssues = data.data;
+  displayCards(allIssues);
+}
+
+allBtn.addEventListener("click", () => {
+  displayCards(allIssues);
+
+  setActiveButton(allBtn);
+});
+
+openBtn.addEventListener("click", () => {
+  const openIssues = allIssues.filter((issue) => issue.status === "open");
+  displayCards(openIssues);
+  setActiveButton(openBtn);
+});
+
+closedBtn.addEventListener("click", () => {
+  const closedIssues = allIssues.filter((issue) => issue.status === "closed");
+  displayCards(closedIssues);
+  setActiveButton(closedBtn);
+});
+
+function setActiveButton(activeBtn) {
+  allBtn.classList.remove("btn-primary");
+  openBtn.classList.remove("btn-primary");
+  closedBtn.classList.remove("btn-primary");
+
+  activeBtn.classList.add("btn-primary");
 }
 
 function displayCards(cards) {
-
-    
-
-    cardContainer.innerHTML = "";
-    issuesCount.innerText = cards.length;
+  cardContainer.innerHTML = "";
+  issuesCount.innerText = cards.length;
   cards.forEach((element) => {
     const statusIcon =
-  element.status === "open"
-    ? "./assets/Open-Status.png"
-    : "./assets/Closed- Status .png";
+      element.status === "open"
+        ? "./assets/Open-Status.png"
+        : "./assets/Closed- Status .png";
     const card = document.createElement("div");
-    if(element.status === "open"){
-    card.className = "card bg-base-100 shadow-sm border-t-4 border-green-500";
-}else{
-    card.className = "card bg-base-100 shadow-sm border-t-4 border-purple-500";
-}
-    card.innerHTML = `<div onclick="openModal(${element.
-id
-})"  class="card-body">
+    if (element.status === "open") {
+      card.className = "card bg-base-100 shadow-sm border-t-4 border-green-500";
+    } else {
+      card.className =
+        "card bg-base-100 shadow-sm border-t-4 border-purple-500";
+    }
+    card.innerHTML = `<div onclick="openModal(${element.id})"  class="card-body">
                 <!-- card top part -->
                 <div class="flex justify-between">
                     <img src="${statusIcon}" alt="">
@@ -80,21 +101,20 @@ id
              <p class="text-[12px] text-[#64748B]">#<span>${element.id}</span> By <span>${element.author}</span></p>
              <p class="text-[12px] text-[#64748B]">${element.updatedAt}</p>
             </div>`;
-            
-            
-            
+
     cardContainer.appendChild(card);
     console.log();
-    
   });
 }
 
-async function openModal(cardId){
-    const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${cardId}`);
-    const data= await res.json();
-    const cardDetails=data.data;
+async function openModal(cardId) {
+  const res = await fetch(
+    `https://phi-lab-server.vercel.app/api/v1/lab/issue/${cardId}`,
+  );
+  const data = await res.json();
+  const cardDetails = data.data;
 
-     cardDetailsModel.innerHTML = `
+  cardDetailsModel.innerHTML = `
     <div class="modal-box">
 
     <h3 class="text-2xl font-bold">${cardDetails.title}</h3>
@@ -132,34 +152,30 @@ async function openModal(cardId){
 
     </div>
     `;
-    
 
-    cardDetailsModel.showModal()
+  cardDetailsModel.showModal();
 }
 
-async function searchIssues(searchText){
-
+async function searchIssues(searchText) {
   showLoading();
-  const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}`);
+  const res = await fetch(
+    `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}`,
+  );
   const data = await res.json();
 
   hideLoading();
 
   displayCards(data.data);
-
 }
 
-searchInput.addEventListener("keyup", (i)=>{
-
+searchInput.addEventListener("keyup", (i) => {
   const text = i.target.value;
 
-  if(text.length === 0){
-     loadCards();
-  }
-  else{
+  if (text.length === 0) {
+    loadCards();
+  } else {
     searchIssues(text);
   }
-
 });
 
 loadCards();
