@@ -34,16 +34,27 @@ async function loadCards() {
 
 function displayCards(cards) {
 
+    
+
     cardContainer.innerHTML = "";
+    issuesCount.innerText = cards.length;
   cards.forEach((element) => {
+    const statusIcon =
+  element.status === "open"
+    ? "./assets/Open-Status.png"
+    : "./assets/Closed- Status .png";
     const card = document.createElement("div");
-    card.className = "card bg-base-100 shadow-sm ";
+    if(element.status === "open"){
+    card.className = "card bg-base-100 shadow-sm border-t-4 border-green-500";
+}else{
+    card.className = "card bg-base-100 shadow-sm border-t-4 border-purple-500";
+}
     card.innerHTML = `<div onclick="openModal(${element.
 id
 })"  class="card-body">
                 <!-- card top part -->
                 <div class="flex justify-between">
-                    <img src="./assets/Open-Status.png" alt="">
+                    <img src="${statusIcon}" alt="">
                     <div class="badge badge-soft badge-error rounded-full">${element.priority}</div>
                     
                 </div>
@@ -69,7 +80,9 @@ id
              <p class="text-[12px] text-[#64748B]">#<span>${element.id}</span> By <span>${element.author}</span></p>
              <p class="text-[12px] text-[#64748B]">${element.updatedAt}</p>
             </div>`;
-            issuesCount.innerText = cards.length;
+            
+            
+            
     cardContainer.appendChild(card);
     console.log();
     

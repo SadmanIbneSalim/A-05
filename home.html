@@ -53,7 +53,8 @@
         </div>
         <div class="flex gap-2">
           <div class="relative w-27 md:w-[300px]">
-            <input id="search-box"
+            <input
+              id="search-box"
               type="text"
               placeholder="Search issues..."
               class="input input-bordered w-full pl-10"
@@ -63,7 +64,9 @@
             ></i>
           </div>
 
-          <button class="btn btn-primary"><i class="fa-solid fa-plus"></i>New Issue</button>
+          <button class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i>New Issue
+          </button>
         </div>
       </div>
     </header>
@@ -71,11 +74,13 @@
       <section
         class="max-w-[1110px] bg-white rounded-lg mx-auto mt-15 p-6 shadow"
       >
-      <!-- toggle buttons -->
+        <!-- toggle buttons -->
         <div class="space-x-2">
           <button id="all-btn" class="btn btn-primary w-30">All</button>
           <button id="open-btn" class="btn w-30 text-[#64748B]">Open</button>
-          <button id="closed-btn" class="btn w-30 text-[#64748B]">Closed</button>
+          <button id="closed-btn" class="btn w-30 text-[#64748B]">
+            Closed
+          </button>
         </div>
       </section>
 
@@ -87,7 +92,9 @@
               <img class="" src="./assets/Aperture.png" alt="" />
             </div>
             <div>
-              <h3 class="text-xl font-semibold"><span id="Issues-count">50</span> Issues</h3>
+              <h3 class="text-xl font-semibold">
+                <span id="Issues-count">50</span> Issues
+              </h3>
               <p class="text-[#64748B]">Track and manage your project issues</p>
             </div>
           </div>
@@ -110,64 +117,77 @@
         </div>
         <hr class="text-slate-200" />
         <!-- cards container -->
-        <div id="card-container"  class="p-2 bg-[#FBFBFB] grid   md:grid-cols-2 lg:grid-cols-4   space-x-2 space-y-2 ">
+        <div
+          id="card-container"
+          class="p-2 bg-[#FBFBFB] grid md:grid-cols-2 lg:grid-cols-4 space-x-2 space-y-2"
+        >
           <!-- cards -->
-  
-          
+
           <!-- _____________ -->
         </div>
         <!-- loading -->
-        <div id="loading-spinner" class="h-[60vh] flex hidden justify-center items-center">
-            <span class="loading loading-bars loading-xl"></span>
+        <div
+          id="loading-spinner"
+          class="h-[60vh] flex hidden justify-center items-center"
+        >
+          <span class="loading loading-bars loading-xl"></span>
         </div>
       </section>
       <!-- details modal -->
-       <!-- Open the modal using ID.showModal() method -->
-<!-- <button class="btn" onclick="my_modal_1.showModal()">open modal</button> -->
-<dialog id="my_modal_1" class="modal">
-  <div class="modal-box">
+      <!-- Open the modal using ID.showModal() method -->
+      <!-- <button class="btn" onclick="my_modal_1.showModal()">open modal</button> -->
+      <dialog id="my_modal_1" class="modal">
+        <div class="modal-box">
+          <h3 class="text-2xl font-bold">Fix broken image uploads</h3>
+          <div class="flex space-x-2 items-center py-3">
+            <div
+              class="badge badge-success rounded-full text-[12px] text-white"
+            >
+              Opened
+            </div>
+            <p class="text-[12px] text-[#64748B]">
+              by <span>Fahim Ahmed</span>
+            </p>
+            <p class="text-[12px] text-[#64748B]">22/02/2026</p>
+          </div>
+          <div>
+            <div
+              class="badge badge-soft badge-error border-red-300 rounded-full text-[12px]"
+            >
+              <i class="fa-solid fa-bug"></i>${ element.labels[0] }
+            </div>
+            <div
+              class="badge badge-soft badge-warning border-yellow-300 rounded-full text-[12px]"
+            >
+              <i class="fa-regular fa-life-ring"></i>${ element.labels[1] }
+            </div>
+          </div>
 
-    <h3 class="text-2xl font-bold">Fix broken image uploads</h3>
-    <div class="flex space-x-2 items-center py-3">
-        <div class="badge badge-success rounded-full text-[12px] text-white">Opened</div>
-    <p class="text-[12px] text-[#64748B]"> by <span>Fahim Ahmed</span></p>
-    <p class="text-[12px] text-[#64748B]">22/02/2026</p>
-    </div>
-    <div>
-        <div class="badge badge-soft badge-error border-red-300 rounded-full text-[12px]"><i class="fa-solid fa-bug"></i>${
-                  element.labels[0]
-                }</div>
-                <div class="badge badge-soft badge-warning border-yellow-300 rounded-full text-[12px]"><i class="fa-regular fa-life-ring"></i>${
-                      element.labels[1]
-                    }</div>
-    </div>
-    
+          <p class="text-[#64748B] py-4">
+            The navigation menu doesn't collapse properly on mobile devices.
+            Need to fix the responsive behavior.
+          </p>
 
+          <div class="bg-base-200 p-2 rounded-lg flex gap-30">
+            <div>
+              <p class="text-[#64748B]">Assignee:</p>
+              <h5 class="font-semibold">Fahim Ahmed</h5>
+            </div>
+            <div>
+              <p class="text-[#64748B]">Priority:</p>
+              <div class="badge badge-error text-white rounded-full">High</div>
+            </div>
+          </div>
 
-    <p class="text-[#64748B] py-4">The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.</p>
-
-    <div class="bg-base-200 p-2 rounded-lg flex gap-30">
-        <div>
-            <p class="text-[#64748B]">Assignee:</p>
-            <h5 class="font-semibold">Fahim Ahmed</h5>
+          <div class="modal-action">
+            <form method="dialog">
+              <!-- if there is a button in form, it will close the modal -->
+              <button class="btn btn-primary">Close</button>
+            </form>
+          </div>
         </div>
-        <div>
-            <p class="text-[#64748B]">Priority:</p>
-            <div class="badge badge-error text-white rounded-full">High</div>
-        </div>
-
-    </div>
-
-    <div class="modal-action">
-      <form method="dialog">
-        <!-- if there is a button in form, it will close the modal -->
-        <button class="btn btn-primary">Close</button>
-      </form>
-    </div>
-  </div>
-</dialog>
+      </dialog>
     </main>
-
     <script src="./js/home.js"></script>
   </body>
 </html>
