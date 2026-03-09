@@ -7,7 +7,7 @@ const logInPassword=document.getElementById('logIn-password');
 password=logInPassword.value;
 
 if(username==='admin' && password==='admin123'){
-    window.location.assign('home.html')
+    window.location.assign('/A-05/home.html')
 
 
 }
